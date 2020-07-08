@@ -19,7 +19,7 @@ function Board() {
     handleMouseUp,
   } = useChess();
 
-  const renderGame = useMemo(
+  const optimizeRenderGame = useMemo(
     () => (
       <>
         {desk.map((row, i) => (
@@ -53,7 +53,7 @@ function Board() {
   );
 
   return (
-    <div className="App">
+    <div className={styles.chess}>
       <button
         onClick={() => {
           socket.emit("changeChessPosition");
@@ -61,32 +61,34 @@ function Board() {
       >
         Start
       </button>
-      <div
-        className={styles.board}
-        onMouseMove={handleMouseMove}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        // onTouchMove={(e) => {
-        //   const clientX = e.touches[0].clientX;
-        //   const clientY = e.touches[0].clientY;
+      <div className={styles["board-container"]}>
+        <div
+          className={styles.board}
+          onMouseMove={handleMouseMove}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          // onTouchMove={(e) => {
+          //   const clientX = e.touches[0].clientX;
+          //   const clientY = e.touches[0].clientY;
 
-        //   console.log({ clientX, clientY });
-        // }}
-      >
-        {renderGame}
-        {movedPiece && (
-          <div
-            className={classnames(styles.piece, {
-              [styles["piece--white"]]: blackChess.includes(+movedPiece),
-            })}
-            style={{
-              top: `${movedPieceCoords.y}%`,
-              left: `${movedPieceCoords.x}%`,
-              transition: "0s",
-              cursor: "pointer",
-            }}
-          />
-        )}
+          //   console.log({ clientX, clientY });
+          // }}
+        >
+          {optimizeRenderGame}
+          {movedPiece && (
+            <div
+              className={classnames(styles.piece, {
+                [styles["piece--white"]]: blackChess.includes(+movedPiece),
+              })}
+              style={{
+                top: `${movedPieceCoords.y}%`,
+                left: `${movedPieceCoords.x}%`,
+                transition: "0s",
+                cursor: "pointer",
+              }}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

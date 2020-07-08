@@ -2,29 +2,31 @@ import { useEffect, useState, useMemo } from "react";
 import socket from "../../socket";
 
 const useChess = () => {
-  const desk = useMemo(() =>
-    [
-      ["o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o"],
-    ].map((row, rowIndex) =>
-      row.map((_, cellIndex) => {
-        const isAccessible = !!(rowIndex % 2
-          ? !(cellIndex % 2)
-          : cellIndex % 2);
+  const desk = useMemo(
+    () =>
+      [
+        ["o", "o", "o", "o", "o", "o", "o", "o"],
+        ["o", "o", "o", "o", "o", "o", "o", "o"],
+        ["o", "o", "o", "o", "o", "o", "o", "o"],
+        ["o", "o", "o", "o", "o", "o", "o", "o"],
+        ["o", "o", "o", "o", "o", "o", "o", "o"],
+        ["o", "o", "o", "o", "o", "o", "o", "o"],
+        ["o", "o", "o", "o", "o", "o", "o", "o"],
+        ["o", "o", "o", "o", "o", "o", "o", "o"],
+      ].map((row, rowIndex) =>
+        row.map((_, cellIndex) => {
+          const isAccessible = !!(rowIndex % 2
+            ? !(cellIndex % 2)
+            : cellIndex % 2);
 
-        return {
-          y: (100 / 8) * rowIndex + 100 / 8 / 2,
-          x: (100 / 8) * cellIndex + 100 / 8 / 2,
-          isAccessible,
-        };
-      })
-    ), []
+          return {
+            y: (100 / 8) * rowIndex + 100 / 8 / 2,
+            x: (100 / 8) * cellIndex + 100 / 8 / 2,
+            isAccessible,
+          };
+        })
+      ),
+    []
   );
 
   const memoPositions = useMemo(
@@ -103,12 +105,12 @@ const useChess = () => {
     const cellNum = target.getAttribute("data-cell");
     const isAccessible = !!+target.getAttribute("data-accessible");
 
-    if (cellNum && isAccessible) {      
+    if (cellNum && isAccessible) {
       setMovedPiece(null);
       socket.emit(
         "changeChessPosition",
-        whiteChess.map((e, i) => (e === movedPiece ? +cellNum : e)),
-        blackChess.map((e, i) => (e === movedPiece ? +cellNum : e))
+        whiteChess.map((e) => (e === movedPiece ? +cellNum : e)),
+        blackChess.map((e) => (e === movedPiece ? +cellNum : e))
       );
     }
     setMovedPiece(null);

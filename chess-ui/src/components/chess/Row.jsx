@@ -6,18 +6,12 @@ const Row = ({ row, i }) => {
     <div className={style.row}>
       {row.map(({ isAccessible }, j) => (
         <div
+          key={j}
           className={`${style.cell} ${i % 2 === 0 ? style["cell--even"] : style["cell--odd"]}`}
           data-cell={isAccessible && Math.ceil((j + 1) / 2 + i * 4) - 1}
-          data-accessible={+isAccessible}
-          key={j}
+          data-accessible={+isAccessible}          
         >
-          {isAccessible && Math.ceil((j + 1) / 2 + i * 4)}
-          {/* y: {y}
-          x: {x} */}
-          {/* z: {isAccessible && "cool"} */}
-          {/* {elem !== o && (
-            <div className={`piece ${elem === x ? "piece--white" : ""}`} />
-          )} */}
+          {/* {isAccessible && Math.ceil((j + 1) / 2 + i * 4)} */}
         </div>
       ))}
     </div>

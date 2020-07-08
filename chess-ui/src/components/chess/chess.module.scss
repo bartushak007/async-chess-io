@@ -1,15 +1,31 @@
+.chess {
+  max-width: 512px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.board-container {
+  position: relative;  
+  width: 100%;
+  padding-bottom: 100%;
+}
+
 .board {
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  position: relative;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   user-select: none;
 }
 
 .row {
   display: flex;
-  /* align-content: center;
-  justify-content: center; */
+  height: calc(100% / 8);
 }
-/* odd */
+
 .row .cell--odd:nth-child(odd) {
   background: rgb(41, 71, 41);
 }
@@ -18,24 +34,20 @@
 }
 
 .cell {
-  height: 4rem;
-  width: 4rem;
+  height: 100%;
+  width: calc(100% / 8);
   position: relative;
   background: white;
 }
 
 .piece {
   background: black;
-  width: 50px;
-  height: 50px;
+  width: calc(100% / 9);
+  height: calc(100% / 9);
   border: solid 4px rgb(231, 71, 71);
   border-radius: 50%;
   position: absolute;
-  /*top: 50%;
-  left: 50%;
-  */
   transform: translate(-50%, -50%);
-  /* background-image: url(img/black.png); */
   background-position: center;
   background-size: cover;
   transition: 0.5s;
@@ -44,5 +56,4 @@
 
 .piece--white {
   background-color: #fff;
-  /* background-image: url(img/white.png); */
 }
