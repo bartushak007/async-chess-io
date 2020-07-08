@@ -1,0 +1,48 @@
+.board {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  position: relative;
+  user-select: none;
+}
+
+.row {
+  display: flex;
+  /* align-content: center;
+  justify-content: center; */
+}
+/* odd */
+.row .cell--odd:nth-child(odd) {
+  background: rgb(41, 71, 41);
+}
+.row .cell--even:nth-child(even) {
+  background: rgb(41, 71, 41);
+}
+
+.cell {
+  height: 4rem;
+  width: 4rem;
+  position: relative;
+  background: white;
+}
+
+.piece {
+  background: black;
+  width: 50px;
+  height: 50px;
+  border: solid 4px rgb(231, 71, 71);
+  border-radius: 50%;
+  position: absolute;
+  /*top: 50%;
+  left: 50%;
+  */
+  transform: translate(-50%, -50%);
+  /* background-image: url(img/black.png); */
+  background-position: center;
+  background-size: cover;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.piece--white {
+  background-color: #fff;
+  /* background-image: url(img/white.png); */
+}
