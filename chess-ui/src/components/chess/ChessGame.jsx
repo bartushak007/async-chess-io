@@ -6,19 +6,19 @@ import classnames from "classnames";
 import Row from "./Row";
 import styles from "./chess.module.scss";
 
-function Board() {
+function Board({ whiteChess: whiteChessProp, bleckChess: bleckChessProp }) {
   const {
-    desk,
+    desk = [],
     memoPositions,
-    whiteChess,
-    blackChess,
     movedPieceCoords,
     movedPiece,
     handleMouseMove,
     handleMouseDown,
     handleMouseUp,
-  } = useChess();
-
+    whiteChess,
+    bleckChess,
+  } = useChess({ whiteChess: whiteChessProp, bleckChess: bleckChessProp });
+  // console.log(whiteChess, bleckChess);
   const optimizeRenderGame = useMemo(
     () => (
       <>
@@ -36,7 +36,7 @@ function Board() {
             }}
           />
         ))}
-        {blackChess.map((position, j) => (
+        {bleckChess.map((position, j) => (
           <div
             key={j}
             className={classnames(styles.piece, styles["piece--white"])}
@@ -49,14 +49,14 @@ function Board() {
         ))}
       </>
     ),
-    [whiteChess, blackChess, movedPiece]
+    [whiteChess, bleckChess, movedPiece]
   );
 
   return (
     <div className={styles.chess}>
       <button
         onClick={() => {
-          socket.emit("changeChessPosition");
+          socket.emit("createGameRoom");
         }}
       >
         Start
@@ -78,7 +78,7 @@ function Board() {
           {movedPiece && (
             <div
               className={classnames(styles.piece, {
-                [styles["piece--white"]]: blackChess.includes(+movedPiece),
+                [styles["piece--white"]]: bleckChess.includes(+movedPiece),
               })}
               style={{
                 top: `${movedPieceCoords.y}%`,

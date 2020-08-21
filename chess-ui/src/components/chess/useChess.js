@@ -1,7 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
 import socket from "../../socket";
 
-const useChess = () => {
+const useChess = ({
+  whiteChess,
+  bleckChess,
+}) => {
   const desk = useMemo(
     () =>
       [
@@ -47,42 +50,16 @@ const useChess = () => {
     []
   );
 
-  const [whiteChess, setWhiteChess] = useState([
-    17,
-    17,
-    17,
-    17,
-    17,
-    17,
-    17,
-    17,
-    17,
-    17,
-    17,
-    17,
-  ]);
-  const [blackChess, setBlackChess] = useState([
-    14,
-    14,
-    14,
-    14,
-    14,
-    14,
-    14,
-    14,
-    14,
-    14,
-    14,
-    14,
-  ]);
+
 
   const [movedPieceCoords, setMovedPieceCoords] = useState({ x: 0, y: 0 });
   const [movedPiece, setMovedPiece] = useState(null);
 
   useEffect(() => {
-    socket.on("changed", ({ positionsWhite, positionsBlack }) => {
-      setWhiteChess(positionsWhite);
-      setBlackChess(positionsBlack);
+    socket.on("gameRoomWasCreated", (...rest) => {
+      console.log({ rest });
+      // setWhiteChess(positionsWhite);
+      // setBleckChess(positionsBleck);
     });
   }, []);
 
@@ -110,7 +87,7 @@ const useChess = () => {
       socket.emit(
         "changeChessPosition",
         whiteChess.map((e) => (e === movedPiece ? +cellNum : e)),
-        blackChess.map((e) => (e === movedPiece ? +cellNum : e))
+        bleckChess.map((e) => (e === movedPiece ? +cellNum : e))
       );
     }
     setMovedPiece(null);
@@ -120,9 +97,9 @@ const useChess = () => {
     desk,
     memoPositions,
     whiteChess,
-    setWhiteChess,
-    blackChess,
-    setBlackChess,
+    // setWhiteChess,
+    bleckChess,
+    // setBleckChess,
     movedPieceCoords,
     setMovedPieceCoords,
     movedPiece,
